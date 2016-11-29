@@ -204,7 +204,7 @@
 	}
 
 	function createCard(idea) {
-	  $('#ideas').prepend('<article class="newIdea" id=' + idea.id + '>\n    <div id = "card-top">\n      <h1 id="idea-title" contenteditable>' + idea.title + '</h1>\n      <button id="delete-btn"></button>\n    </div>\n    <div id = "card-middle">\n      <p id="idea-body" contenteditable>' + idea.body + '</p>\n    </div>\n    <div id = "card-bottom">\n      <button id="up-btn"></button>\n      <button id="down-btn"></button>\n      <h2 id="quality">quality: ' + idea.quality + '</h2>\n    </div>\n  </article>');
+	  $('#ideas').prepend('<article class="newIdea" id=' + idea.id + '>\n    <div id = "card-top">\n      <h1 id="idea-title" contenteditable>' + idea.title + '</h1>\n      <button id="delete-btn"></button>\n    </div>\n    <div id = "card-middle">\n      <p id="idea-body" contenteditable>' + idea.body + '</p>\n    </div>\n    <div id = "card-bottom">\n      <button id="up-btn"></button>\n      <button id="down-btn"></button>\n      <h2 id="quality">quality: ' + idea.quality + '</h2>\n      <button id="completed-task">completed</button>\n    </div>\n  </article>');
 	}
 
 	function findIdeaByID(id) {
