@@ -1,0 +1,204 @@
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+header {
+  background-color: #E5F3F2;
+  height: 280px;
+  padding-top: 10px;
+  text-align: center;
+  width: 100%;
+  }
+
+summary {
+  display: block;
+  margin:  10px auto;
+}
+
+textarea {
+  border: 1px solid #D1D3D4;
+  display: inline-block;
+  font-size: 20px;
+  height: 30px;
+  margin: 5px auto;
+  resize: none;
+  width: 90vw;
+}
+
+.button {
+  background-color: #00A79D;
+  border: none;
+  color: #FFF;
+  display: inline-block;
+  font-size: 18px;
+  font-family: 'Open Sans', sans-serif;
+  height: 30px;
+  margin:  5px auto;
+  width: 92vw;
+}
+
+.button:hover {
+  background-color: #045E55;
+}
+.button:disabled {
+  background-color: lightgray;
+  cursor: default;
+}
+.search {
+  margin-top: 5px;
+  position: relative;
+  text-align: center;
+}
+
+#body{
+  height: 70px;
+}
+
+#idea-logo {
+  color: #00A79D;
+  display: inline;
+  font-family: 'Roboto Slab', serif;
+  font-size: 40px;
+}
+
+#box-logo{
+  color: #6D6E71;
+  display: inline;
+  font-family: 'Roboto Slab', serif;
+  font-size: 40px;
+}
+
+article {
+  padding: 10px 0;
+  position: relative;
+  margin: 20px auto;
+  width: 90vw;
+}
+
+#card-top{
+  height: 30px;
+}
+
+#card-middle{
+  height: 80px;
+  overflow: scroll;
+}
+
+#card-bottom{
+  align-items: center;
+  border-bottom: 1px solid #607D8B;
+  display: flex;
+  height: 30px;
+  padding-bottom: 20px;
+}
+
+#idea-title {
+  color: #6D6E71;
+  font-family: 'Roboto Slab', serif;
+  font-size: 24px;
+  height: 30px;
+  left: 0;
+  overflow: scroll;
+  position: absolute;
+  top: 0;
+
+}
+
+#idea-body{
+  color: #939598;
+  text-align: left;
+
+}
+
+#delete-btn{
+  background-image: url('../images/delete.svg');
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  height: 25px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 25px;
+}
+
+#delete-btn:hover {
+  background-image: url('../images/delete-hover.svg');
+}
+
+#up-btn{
+  background-color: transparent;
+  background-image: url('../images/upvote.svg');
+  background-repeat: no-repeat;
+  border: none;
+  bottom: 0;
+  height: 25px;
+  left: 0;
+  width: 25px;
+}
+
+#up-btn:hover {
+  background-image: url('../images/upvote-hover.svg');
+}
+
+#down-btn{
+  background-image: url('../images/downvote.svg');
+  background-color: transparent;
+  background-repeat: no-repeat;
+  height: 25px;
+  border: none;
+  bottom: 0;
+  margin-left: 10px;
+  width: 25px;
+}
+
+#down-btn:hover {
+  background-image: url('../images/downvote-hover.svg');
+}
+
+#quality {
+  display: inline;
+  color: #6D6E71;
+  margin-left: 30px;
+}
+
+@media screen and (min-width: 768px) {
+
+textarea {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 15px;
+  width: 400px;
+}
+
+.button {
+  margin-bottom: 15px;
+  width: 400px;
+}
+
+.newIdea {
+  width: 400px;
+}
+
+.search {
+  margin-top: 15px;
+}
+
+#title {
+  margin-top: 20px;
+}
+#body {
+  height: 30px;
+}
+
+#idea-logo {
+  font-size: 50px;
+}
+
+#box-logo {
+  font-size: 50px;
+}
+
+#card-middle {
+  height: 60px;
+}
