@@ -42,11 +42,9 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
-
-	var newAlert = __webpack_require__(1);newAlert();
 
 	var ideaArray = [];
 	var sortedArray = [];
@@ -168,8 +166,7 @@
 	}
 
 	function render(givenArray) {
-	  if (givenArray) renderArray = givenArray;
-	  if (!givenArray) renderArray = ideaArray;
+	  var renderArray = givenArray || ideaArray;
 	  $('#ideas').empty();
 	  for (var i = 0; i < renderArray.length; i++) {
 	    createCard(renderArray[i]);
@@ -227,16 +224,6 @@
 	    return a.quality < b.quality;
 	  });
 	}
-
-/***/ },
-/* 1 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function () {
-	  alert('ITS A TRAP!!!!!!!!!');
-	};
 
 /***/ }
 /******/ ]);
