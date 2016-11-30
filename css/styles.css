@@ -54,6 +54,12 @@ textarea {
   height: 70px;
 }
 
+#char-num {
+  text-align: right;
+  margin-right: 5vw;
+  font-size: 15px;
+}
+
 #idea-logo {
   color: #00A79D;
   display: inline;

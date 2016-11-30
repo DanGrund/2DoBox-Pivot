@@ -18,7 +18,8 @@
       </summary>
       <form>
         <textarea type="text" id="title" placeholder="Title"></textarea>
-        <textarea type="text" id="body" placeholder="Task"></textarea>
+        <textarea type="text" id="body" placeholder="Task" onkeyup="countChar(this)"></textarea>
+        <div id="char-num"></div>
         <input type="button" value="save" class="button" id="save" disabled>
       </form>
       <button class="button" id="sort">sort</button>
