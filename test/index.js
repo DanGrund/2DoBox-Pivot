@@ -19,7 +19,7 @@ describe('our test bundle', () => {
     });
 
     it('should have a sort order of false by default', () => {
-      assert(true);
+      assert.property(sortedArray, false );
     });
 
     it('if ideas exist in local storage they are rendered to the page', () => {
