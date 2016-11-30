@@ -50,7 +50,7 @@ textarea {
   text-align: center;
 }
 
-#body{
+#task{
   height: 70px;
 }
 
@@ -60,7 +60,7 @@ textarea {
   font-size: 15px;
 }
 
-#idea-logo {
+#todo-logo {
   color: #00A79D;
   display: inline;
   font-family: 'Roboto Slab', serif;
@@ -98,7 +98,7 @@ article {
   padding-bottom: 20px;
 }
 
-.idea-title {
+.task-title {
   color: #6D6E71;
   font-family: 'Roboto Slab', serif;
   font-size: 24px;
@@ -110,7 +110,7 @@ article {
 
 }
 
-.idea-body{
+.task-body{
   color: #939598;
   text-align: left;
 
@@ -162,7 +162,7 @@ article {
   background-image: url('../images/downvote-hover.svg');
 }
 
-#quality {
+.quality {
   display: inline;
   color: #6D6E71;
   margin-left: 30px;
@@ -182,7 +182,7 @@ textarea {
   width: 400px;
 }
 
-.newIdea {
+.new-task {
   width: 400px;
 }
 
@@ -193,11 +193,11 @@ textarea {
 #title {
   margin-top: 20px;
 }
-#body {
+#task {
   height: 30px;
 }
 
-#idea-logo {
+#todo-logo {
   font-size: 50px;
 }
 
