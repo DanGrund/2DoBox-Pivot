@@ -451,13 +451,47 @@
 
 	'use strict';
 
+	/*jshint esversion: 6 */
+
 	var assert = __webpack_require__(10).assert;
 
 	describe('our test bundle', function () {
-	  it('should work', function () {
-	    assert(true);
+	  context('with default attributes', function () {
+
+	    it('should work', function () {
+	      assert(true);
+	    });
+
+	    it('should have an empty idea array by default ', function () {
+	      assert.isArray(ideaArray);
+	    });
+
+	    it('should have an empty sorted array by default', function () {
+	      assert(true);
+	    });
+
+	    it('should have a sort order of false by default', function () {
+	      assert.property(sortedArray, false);
+	    });
+
+	    it('if ideas exist in local storage they are rendered to the page', function () {
+	      assert(true);
+	    });
+
+	    it('should store ideas in local storage', function () {
+	      assert(true);
+	    });
+
+	    it('should delete ideas from local storage', function () {
+	      assert(true);
+	    });
 	  });
 	});
+	//
+	// DOM tests
+	// save button creates new card
+	// card persists on refresh
+	// delete button does shit
 
 /***/ },
 /* 10 */

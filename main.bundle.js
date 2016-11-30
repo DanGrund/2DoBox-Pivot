@@ -52,8 +52,8 @@
 	var $body = $('#body');
 	var sortOrder = false;
 	var qualityChangers = {
-	  up: { genius: "genius", plausible: "genius", swill: "plausible" },
-	  down: { genius: "plausible", plausible: "swill", swill: "swill" }
+	  up: { Critical: "Critical", High: "Critical", Normal: "High", Low: "Normal", None: "Low" },
+	  down: { Critical: "High", High: "Normal", Normal: "Low", Low: "None", None: "None" }
 	};
 
 	$('document').ready(function () {
@@ -93,13 +93,13 @@
 	  return render();
 	});
 
-	$("#ideas").on("click", "#delete-btn", function () {
+	$("#ideas").on("click", ".delete-btn", function () {
 	  $(this).closest("article").remove();
 	  var id = this.closest("article").id;
 	  deleteIdea(id);
 	});
 
-	$("#ideas").on('click', "#up-btn", function () {
+	$("#ideas").on('click', ".up-btn", function () {
 	  var id = +$(this).closest("article").attr('id');
 	  var currentIdea = findIdeaByID(id);
 	  var ideaQuality = currentIdea.quality;
@@ -112,7 +112,7 @@
 	  localStorage.setItem("ideaArray", JSON.stringify(ideaArray));
 	});
 
-	$("#ideas").on('click', "#down-btn", function () {
+	$("#ideas").on('click', ".down-btn", function () {
 	  var id = +$(this).closest("article").attr('id');
 	  var currentIdea = findIdeaByID(id);
 	  var ideaQuality = currentIdea.quality;
@@ -125,7 +125,11 @@
 	  localStorage.setItem("ideaArray", JSON.stringify(ideaArray));
 	});
 
-	$('#ideas').on('keyup blur', "#idea-title", function (e) {
+	$("#ideas").on('click', ".completed-btn", function () {
+	  var id = +$(this).closest("article").css("background-color", "gray");
+	});
+
+	$('#ideas').on('keyup blur', ".idea-title", function (e) {
 	  if (e.which == 13 || e.type === "focusout") {
 	    e.preventDefault();
 	    var id = +$(this).closest("article").attr('id');
@@ -141,7 +145,7 @@
 	  }
 	});
 
-	$('#ideas').on('keyup blur', "#idea-body", function (e) {
+	$('#ideas').on('keyup blur', ".idea-body", function (e) {
 	  if (e.which == 13 || e.type === "focusout") {
 	    e.preventDefault();
 	    var id = +$(this).closest("article").attr('id');
@@ -187,7 +191,7 @@
 	  this.id = new Date().getTime();
 	  this.title = title;
 	  this.body = body;
-	  this.quality = 'swill';
+	  this.quality = 'Normal';
 	}
 
 	function storeIdea(idea) {
@@ -204,7 +208,7 @@
 	}
 
 	function createCard(idea) {
-	  $('#ideas').prepend('<article class="newIdea" id=' + idea.id + '>\n    <div id = "card-top">\n      <h1 id="idea-title" contenteditable>' + idea.title + '</h1>\n      <button id="delete-btn"></button>\n    </div>\n    <div id = "card-middle">\n      <p id="idea-body" contenteditable>' + idea.body + '</p>\n    </div>\n    <div id = "card-bottom">\n      <button id="up-btn"></button>\n      <button id="down-btn"></button>\n      <h2 id="quality">quality: ' + idea.quality + '</h2>\n      <button id="completed-task">completed</button>\n    </div>\n  </article>');
+	  $('#ideas').prepend('<article class="newIdea" id=' + idea.id + '>\n    <div class = "card-top">\n      <h1 class="idea-title" contenteditable>' + idea.title + '</h1>\n      <button class="delete-btn"></button>\n    </div>\n    <div class = "card-middle">\n      <p class="idea-body" contenteditable>' + idea.body + '</p>\n    </div>\n    <div class = "card-bottom">\n      <button class="up-btn"></button>\n      <button class="down-btn"></button>\n      <h2 class="quality">quality: ' + idea.quality + '</h2>\n      <button class="completed-btn">completed</button>\n    </div>\n  </article>');
 	}
 
 	function findIdeaByID(id) {
