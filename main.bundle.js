@@ -95,6 +95,10 @@
 	  }
 	});
 
+	$('.quality-buttons').on('click', '.quality-button', function () {
+	  return task.quality.id;
+	});
+
 	$('#search').on('keyup', function (e) {
 	  var searchText = e.target.value.toLowerCase();
 	  var matches = taskArray.filter(function (task) {
@@ -261,6 +265,11 @@
 	  });
 	}
 
+	function findTaskByQuality(quality) {
+	  return taskArray.filter(function (task) {
+	    return task.quality === quality;
+	  });
+	}
 	module.exports = index;
 
 /***/ }
