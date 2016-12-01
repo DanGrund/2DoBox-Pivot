@@ -452,10 +452,11 @@
 	'use strict';
 
 	/*jshint esversion: 6 */
+	var chai = __webpack_require__(10);
+	var assert = chai.assert;
+	// const index = require('../lib/index.js');
 
-	var assert = __webpack_require__(10).assert;
-
-	describe('our test bundle', function () {
+	describe('', function () {
 	  context('with default attributes', function () {
 
 	    it('should work', function () {
@@ -484,6 +485,49 @@
 
 	    it('should delete ideas from local storage', function () {
 	      assert(true);
+	    });
+	  });
+
+	  context('is a function', function () {
+
+	    it('loadPage', function () {
+	      assert.isFunction(loadPage);
+	    });
+
+	    it('render', function () {
+	      assert.isFunction(render);
+	    });
+
+	    it('checkField', function () {
+	      assert.isFunction(checkField);
+	    });
+
+	    it('Task', function () {
+	      assert.isFunction(Task);
+	    });
+
+	    it('storeTask', function () {
+	      assert.isFunction(storeTask);
+	    });
+
+	    it('deleteTask', function () {
+	      assert.isFunction(deleteTask);
+	    });
+
+	    it('createCard', function () {
+	      assert.isFunction(createCard);
+	    });
+
+	    it('findTaskByID', function () {
+	      assert.isFunction(findTaskByID);
+	    });
+
+	    it('upSort', function () {
+	      assert.isFunction(upSort);
+	    });
+
+	    it('downSort', function () {
+	      assert.isFunction(downSort);
 	    });
 	  });
 	});
