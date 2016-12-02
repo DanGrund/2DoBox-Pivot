@@ -46,11 +46,11 @@
 
 	'use strict';
 
-
 	/*jshint esversion: 6 */
 	var taskArray = [];
 	var completedArray = [];
 	var sortedArray = [];
+	var qualityArray = [];
 	var $title = $('#title');
 	var $task = $('#task');
 	var sortOrder = false;
@@ -99,8 +99,12 @@
 	  }
 	});
 
-	$('.quality-buttons').on('click', '.quality-button', function () {
-	  render(sortByQuality());
+	$('.quality-button').on('click', function () {
+	  var id = this.id;
+	  var matches = taskArray.filter(function (task) {
+	    return task.quality.toLowerCase().includes(id);
+	  });
+	  if (matches) return render(matches);
 	});
 
 	$('#search').on('keyup', function (e) {
@@ -167,7 +171,7 @@
 	  }
 	});
 
-	$('#todos').on('keyup blur', "#task-title", function (e) {
+	$('#todos').on('keyup blur', ".task-title", function (e) {
 	  if (e.which == 13 || e.type === "focusout") {
 	    e.preventDefault();
 	    var id = +$(this).closest("article").attr('id');
@@ -179,11 +183,11 @@
 	      }
 	    });
 	    localStorage.setItem("taskArray", JSON.stringify(taskArray));
-	    render();
+	    // render();
 	  }
 	});
 
-	$('#todos').on('keyup blur', "#task-body", function (e) {
+	$('#todos').on('keyup blur', ".task-body", function (e) {
 	  if (e.which == 13 || e.type === "focusout") {
 	    e.preventDefault();
 	    var id = +$(this).closest("article").attr('id');
@@ -195,23 +199,27 @@
 	      }
 	    });
 	    localStorage.setItem("taskArray", JSON.stringify(taskArray));
-	    render();
+	    // render();
 	  }
+	});
+
+	$('#showall').on('click', function (e) {
+	  render();
 	});
 
 	function loadPage() {
 	  var holdingValue = JSON.parse(localStorage.getItem("taskArray"));
 	  if (holdingValue) {
 	    taskArray = holdingValue;
-	    render(taskArray, 6);
+	    render(taskArray, 10);
 	  }
 	}
 
 	function render(givenArray, cardsToRender) {
-	  var cards = cardsToRender;
 	  var renderArray = givenArray || taskArray;
+	  var cards = cardsToRender || renderArray.length;
 	  $('#todos').empty();
-	  for (var i = 0; i < cards || renderArray.length; i++) {
+	  for (var i = renderArray.length - cards; i < renderArray.length; i++) {
 	    createCard(renderArray[i]);
 	  }
 	}
@@ -249,7 +257,7 @@
 	}
 
 	function createCard(task) {
-	  $('#todos').prepend('<article class="new-task" id=' + task.id + '>\n    <div class = "card-top">\n      <h1 class="task-title" contenteditable>' + task.title + '</h1>\n      <button class="delete-btn"></button>\n    </div>\n    <div class = "card-middle">\n      <p class="task-body" contenteditable>' + task.body + '</p>\n    </div>\n    <div class = "card-bottom">\n      <button class="up-btn"></button>\n      <button class="down-btn"></button>\n      <h2 class="quality">quality: ' + task.quality + '</h2>\n      <button class="completed-btn">completed</button>\n    </div>\n  </article>');
+	  $('#todos').prepend('<article class="new-task" id=' + task.id + '>\n    <div class = "card-top">\n      <h1 class="task-title" contenteditable>' + task.title + '</h1>\n      <button class="delete-btn" value="delete task"></button>\n    </div>\n    <div class = "card-middle">\n      <p class="task-body" contenteditable>' + task.body + '</p>\n    </div>\n    <div class = "card-bottom">\n      <button class="up-btn" value="increase importance button"></button>\n      <button class="down-btn" value="decrease importance button"></button>\n      <h2 class="quality">quality: ' + task.quality + '</h2>\n      <button class="completed-btn" value="mark as completed button">completed</button>\n    </div>\n  </article>');
 	}
 
 	function findTaskByID(id) {
@@ -269,9 +277,6 @@
 	    return a.quality < b.quality;
 	  });
 	}
-
-
-	module.exports = index;
 
 /***/ }
 /******/ ]);
