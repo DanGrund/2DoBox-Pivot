@@ -454,7 +454,7 @@
 	/*jshint esversion: 6 */
 	var chai = __webpack_require__(10);
 	var assert = chai.assert;
-	// const index = require('../lib/index.js');
+	// const index = require('../lib/index');
 
 	describe('', function () {
 	  context('with default attributes', function () {

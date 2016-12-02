@@ -1,9 +1,9 @@
 /*jshint esversion: 6 */
 const chai = require('chai');
 const assert = chai.assert;
-const index = require('../lib/index');
+// const index = require('../lib/index');
 
-// describe('', () => {
+describe('', () => {
   context('with default attributes', () => {
 
     it('should work', () => {

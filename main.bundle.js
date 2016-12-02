@@ -99,6 +99,10 @@
 	  }
 	});
 
+	$('.quality-buttons').on('click', '.quality-button', function () {
+	  render(sortByQuality());
+	});
+
 	$('#search').on('keyup', function (e) {
 	  var searchText = e.target.value.toLowerCase();
 	  var matches = taskArray.filter(function (task) {
@@ -265,6 +269,7 @@
 	    return a.quality < b.quality;
 	  });
 	}
+
 
 	module.exports = index;
 
