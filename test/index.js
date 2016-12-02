@@ -1,9 +1,9 @@
 /*jshint esversion: 6 */
+const chai = require('chai');
+const assert = chai.assert;
+const index = require('../lib/index');
 
-const assert = require('chai').assert;
-
-
-describe('our test bundle', () => {
+// describe('', () => {
   context('with default attributes', () => {
 
     it('should work', () => {
@@ -32,6 +32,49 @@ describe('our test bundle', () => {
 
     it('should delete ideas from local storage', () => {
       assert(true);
+    });
+  });
+
+  context('is a function', () => {
+
+    it('loadPage', () => {
+      assert.isFunction(loadPage);
+    });
+
+    it('render', () => {
+      assert.isFunction(render);
+    });
+
+    it('checkField', () => {
+      assert.isFunction(checkField);
+    });
+
+    it('Task', () => {
+      assert.isFunction(Task);
+    });
+
+    it('storeTask', () => {
+      assert.isFunction(storeTask);
+    });
+
+    it('deleteTask', () => {
+      assert.isFunction(deleteTask);
+    });
+
+    it('createCard', () => {
+      assert.isFunction(createCard);
+    });
+
+    it('findTaskByID', () => {
+      assert.isFunction(findTaskByID);
+    });
+
+    it('upSort', () => {
+      assert.isFunction(upSort);
+    });
+
+    it('downSort', () => {
+      assert.isFunction(downSort);
     });
   });
 });
