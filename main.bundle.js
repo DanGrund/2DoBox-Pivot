@@ -96,7 +96,7 @@
 	});
 
 	$('.quality-buttons').on('click', '.quality-button', function () {
-	  return task.quality.id;
+	  render(sortByQuality());
 	});
 
 	$('#search').on('keyup', function (e) {
@@ -265,12 +265,22 @@
 	  });
 	}
 
-	function findTaskByQuality(quality) {
-	  return taskArray.filter(function (task) {
-	    return task.quality === quality;
+	// function displayTaskByQuality(quality) {
+	//   return taskArray.filter(function(task) {
+	//     return task.quality === quality;
+	//   })
+	// }
+
+	function sortByQuality() {
+	  return taskArray.sort(function (task) {
+	    return task.quality;
 	  });
 	}
-	module.exports = index;
+
+	// function displayByQuality() {
+	//   return taskArray.filter(function)
+	// }
+	// module.exports = index;
 
 /***/ }
 /******/ ]);
