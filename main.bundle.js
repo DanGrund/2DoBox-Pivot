@@ -46,10 +46,12 @@
 
 	'use strict';
 
-	var ideaArray = [];
+	/*jshint esversion: 6 */
+	var taskArray = [];
+	var completedArray = [];
 	var sortedArray = [];
 	var $title = $('#title');
-	var $body = $('#body');
+	var $task = $('#task');
 	var sortOrder = false;
 	var qualityChangers = {
 	  up: { Critical: "Critical", High: "Critical", Normal: "High", Low: "Normal", None: "Low" },
@@ -60,18 +62,30 @@
 	  loadPage();
 	});
 
-	$("#title, #body").keyup(function () {
+	$("#title, #task").keyup(function () {
 	  checkField();
+	});
+
+	$('#task').keyup(function () {
+	  var max = 120;
+	  var length = $(this).val().length;
+	  if (length >= max) {
+	    $('#char-num').text(' you have reached the 120 character limit');
+	  } else {
+	    var char = max - length;
+	    $('#char-num').text(char + ' characters left');
+	  }
 	});
 
 	$('#save').on('click', function (e) {
 	  var title = $title.val();
-	  var body = $body.val();
-	  var idea = new Idea(title, body);
-	  storeIdea(idea);
-	  createCard(idea);
+	  var task = $task.val();
+	  var todo = new Task(title, task);
+	  storeTask(todo);
+	  createCard(todo);
 	  $title.val("");
-	  $body.val("");
+	  $task.val("");
+	  $title.focus();
 	});
 
 	$('#sort').on('click', function (e) {
@@ -86,145 +100,167 @@
 
 	$('#search').on('keyup', function (e) {
 	  var searchText = e.target.value.toLowerCase();
-	  var matches = ideaArray.filter(function (idea) {
-	    return idea.body.toLowerCase().includes(searchText) || idea.title.toLowerCase().includes(searchText);
+	  var matches = taskArray.filter(function (task) {
+	    return task.body.toLowerCase().includes(searchText) || task.title.toLowerCase().includes(searchText);
 	  });
 	  if (matches) return render(matches);
 	  return render();
 	});
 
-	$("#ideas").on("click", ".delete-btn", function () {
+	$("#todos").on("click", ".delete-btn", function () {
 	  $(this).closest("article").remove();
 	  var id = this.closest("article").id;
-	  deleteIdea(id);
+	  deleteTask(id);
 	});
 
-	$("#ideas").on('click', ".up-btn", function () {
+	$("#todos").on('click', ".up-btn", function () {
 	  var id = +$(this).closest("article").attr('id');
-	  var currentIdea = findIdeaByID(id);
-	  var ideaQuality = currentIdea.quality;
-	  ideaArray.forEach(function (idea) {
-	    if (idea.id === id) {
-	      idea.quality = qualityChangers.up[ideaQuality];
+	  var currentTask = findTaskByID(id);
+	  var taskQuality = currentTask.quality;
+	  taskArray.forEach(function (task) {
+	    if (task.id === id) {
+	      task.quality = qualityChangers.up[taskQuality];
 	    }
 	  });
-	  $(this).siblings("h2").text("quality: " + qualityChangers.up[ideaQuality]);
-	  localStorage.setItem("ideaArray", JSON.stringify(ideaArray));
+	  $(this).siblings("h2").text("quality: " + qualityChangers.up[taskQuality]);
+	  localStorage.setItem("taskArray", JSON.stringify(taskArray));
 	});
 
-	$("#ideas").on('click', ".down-btn", function () {
+	$("#todos").on('click', ".down-btn", function () {
 	  var id = +$(this).closest("article").attr('id');
-	  var currentIdea = findIdeaByID(id);
-	  var ideaQuality = currentIdea.quality;
-	  ideaArray.forEach(function (idea) {
-	    if (idea.id === id) {
-	      idea.quality = qualityChangers.down[ideaQuality];
+	  var currentTask = findTaskByID(id);
+	  var taskQuality = currentTask.quality;
+	  taskArray.forEach(function (task) {
+	    if (task.id === id) {
+	      task.quality = qualityChangers.down[taskQuality];
 	    }
 	  });
-	  $(this).siblings("h2").text("quality: " + qualityChangers.down[ideaQuality]);
-	  localStorage.setItem("ideaArray", JSON.stringify(ideaArray));
+	  $(this).siblings("h2").text("quality: " + qualityChangers.down[taskQuality]);
+	  localStorage.setItem("taskArray", JSON.stringify(taskArray));
 	});
 
-	$("#ideas").on('click', ".completed-btn", function () {
-	  var id = +$(this).closest("article").css("background-color", "gray");
+	$("#todos").on('click', ".completed-btn", function () {
+	  var id = +$(this).closest("article").attr('id');
+	  var currentTask = findTaskByID(id);
+	  var taskComplete = currentTask.completed;
+	  if (taskComplete === false) {
+	    $(this).closest("article").css("background-color", "gray");
+	    taskArray.forEach(function (task) {
+	      if (task.id === id) {
+	        task.completed = true;
+	      }
+	    });
+	    localStorage.setItem("taskArray", JSON.stringify(taskArray));
+	  } else {
+	    $(this).closest("article").css("background-color", "white");
+	    taskArray.forEach(function (task) {
+	      if (task.id === id) {
+	        task.completed = false;
+	      }
+	    });
+	    localStorage.setItem("taskArray", JSON.stringify(taskArray));
+	  }
 	});
 
-	$('#ideas').on('keyup blur', ".idea-title", function (e) {
+	$('#todos').on('keyup blur', "#task-title", function (e) {
 	  if (e.which == 13 || e.type === "focusout") {
 	    e.preventDefault();
 	    var id = +$(this).closest("article").attr('id');
-	    var currentIdea = findIdeaByID(id);
+	    var currentTask = findTaskByID(id);
 	    var newTitle = $(this).text();
-	    ideaArray.forEach(function (idea) {
-	      if (idea.id === id) {
-	        idea.title = newTitle;
+	    taskArray.forEach(function (task) {
+	      if (task.id === id) {
+	        task.title = newTitle;
 	      }
 	    });
-	    localStorage.setItem("ideaArray", JSON.stringify(ideaArray));
+	    localStorage.setItem("taskArray", JSON.stringify(taskArray));
 	    render();
 	  }
 	});
 
-	$('#ideas').on('keyup blur', ".idea-body", function (e) {
+	$('#todos').on('keyup blur', "#task-body", function (e) {
 	  if (e.which == 13 || e.type === "focusout") {
 	    e.preventDefault();
 	    var id = +$(this).closest("article").attr('id');
-	    var currentIdea = findIdeaByID(id);
+	    var currentTask = findTaskByID(id);
 	    var newBody = $(this).text();
-	    ideaArray.forEach(function (idea) {
-	      if (idea.id === id) {
-	        idea.body = newBody;
+	    taskArray.forEach(function (task) {
+	      if (task.id === id) {
+	        task.body = newBody;
 	      }
 	    });
-	    localStorage.setItem("ideaArray", JSON.stringify(ideaArray));
+	    localStorage.setItem("taskArray", JSON.stringify(taskArray));
 	    render();
 	  }
 	});
 
 	function loadPage() {
-	  var holdingValue = JSON.parse(localStorage.getItem("ideaArray"));
+	  var holdingValue = JSON.parse(localStorage.getItem("taskArray"));
 	  if (holdingValue) {
-	    ideaArray = holdingValue;
-	    render(ideaArray);
+	    taskArray = holdingValue;
+	    render(taskArray, 6);
 	  }
 	}
 
-	function render(givenArray) {
-	  var renderArray = givenArray || ideaArray;
-	  $('#ideas').empty();
-	  for (var i = 0; i < renderArray.length; i++) {
+	function render(givenArray, cardsToRender) {
+	  var cards = cardsToRender;
+	  var renderArray = givenArray || taskArray;
+	  $('#todos').empty();
+	  for (var i = 0; i < cards || renderArray.length; i++) {
 	    createCard(renderArray[i]);
 	  }
 	}
 
 	function checkField() {
 	  var checkTitle = /\S/.test($("#title").val());
-	  var checkBody = /\S/.test($("#body").val());
-	  if (checkTitle && checkBody) {
+	  var checkBody = /\S/.test($("#task").val());
+	  var taskLength = $('#task').val().length;
+	  if (checkTitle && checkBody && taskLength < 120) {
 	    $("#save").attr("disabled", false);
 	  } else {
 	    $("#save").attr("disabled", true);
 	  }
 	}
 
-	function Idea(title, body) {
+	function Task(title, body) {
 	  this.id = new Date().getTime();
 	  this.title = title;
 	  this.body = body;
 	  this.quality = 'Normal';
+	  this.completed = false;
 	}
 
-	function storeIdea(idea) {
-	  ideaArray.push(idea);
-	  localStorage.setItem("ideaArray", JSON.stringify(ideaArray));
+	function storeTask(task) {
+	  taskArray.push(task);
+	  localStorage.setItem("taskArray", JSON.stringify(taskArray));
 	}
 
-	function deleteIdea(id) {
-	  for (var i = 0; i < ideaArray.length; i++) {
-	    var ideaId = ideaArray[i].id;
-	    if (id == ideaId) ideaArray.splice(i, 1);
-	    localStorage.setItem("ideaArray", JSON.stringify(ideaArray));
+	function deleteTask(id) {
+	  for (var i = 0; i < taskArray.length; i++) {
+	    var taskId = taskArray[i].id;
+	    if (id == taskId) taskArray.splice(i, 1);
+	    localStorage.setItem("taskArray", JSON.stringify(taskArray));
 	  }
 	}
 
-	function createCard(idea) {
-	  $('#ideas').prepend('<article class="newIdea" id=' + idea.id + '>\n    <div class = "card-top">\n      <h1 class="idea-title" contenteditable>' + idea.title + '</h1>\n      <button class="delete-btn"></button>\n    </div>\n    <div class = "card-middle">\n      <p class="idea-body" contenteditable>' + idea.body + '</p>\n    </div>\n    <div class = "card-bottom">\n      <button class="up-btn"></button>\n      <button class="down-btn"></button>\n      <h2 class="quality">quality: ' + idea.quality + '</h2>\n      <button class="completed-btn">completed</button>\n    </div>\n  </article>');
+	function createCard(task) {
+	  $('#todos').prepend('<article class="new-task" id=' + task.id + '>\n    <div class = "card-top">\n      <h1 class="task-title" contenteditable>' + task.title + '</h1>\n      <button class="delete-btn"></button>\n    </div>\n    <div class = "card-middle">\n      <p class="task-body" contenteditable>' + task.body + '</p>\n    </div>\n    <div class = "card-bottom">\n      <button class="up-btn"></button>\n      <button class="down-btn"></button>\n      <h2 class="quality">quality: ' + task.quality + '</h2>\n      <button class="completed-btn">completed</button>\n    </div>\n  </article>');
 	}
 
-	function findIdeaByID(id) {
-	  return ideaArray.filter(function (idea) {
-	    return idea.id === id;
+	function findTaskByID(id) {
+	  return taskArray.filter(function (task) {
+	    return task.id === id;
 	  })[0];
 	}
 
 	function upSort() {
-	  return ideaArray.sort(function (a, b) {
+	  return taskArray.sort(function (a, b) {
 	    return a.quality > b.quality;
 	  });
 	}
 
 	function downSort() {
-	  return ideaArray.sort(function (a, b) {
+	  return taskArray.sort(function (a, b) {
 	    return a.quality < b.quality;
 	  });
 	}
