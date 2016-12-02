@@ -46,7 +46,9 @@
 
 	'use strict';
 
+	/*jshint esversion: 6 */
 	var taskArray = [];
+	var completedArray = [];
 	var sortedArray = [];
 	var $title = $('#title');
 	var $task = $('#task');
@@ -83,6 +85,7 @@
 	  createCard(todo);
 	  $title.val("");
 	  $task.val("");
+	  $title.focus();
 	});
 
 	$('#sort').on('click', function (e) {
@@ -199,14 +202,15 @@
 	  var holdingValue = JSON.parse(localStorage.getItem("taskArray"));
 	  if (holdingValue) {
 	    taskArray = holdingValue;
-	    render(taskArray);
+	    render(taskArray, 6);
 	  }
 	}
 
-	function render(givenArray) {
+	function render(givenArray, cardsToRender) {
+	  var cards = cardsToRender;
 	  var renderArray = givenArray || taskArray;
 	  $('#todos').empty();
-	  for (var i = 0; i < renderArray.length; i++) {
+	  for (var i = 0; i < cards || renderArray.length; i++) {
 	    createCard(renderArray[i]);
 	  }
 	}
@@ -264,23 +268,3 @@
 	    return a.quality < b.quality;
 	  });
 	}
-
-	// function displayTaskByQuality(quality) {
-	//   return taskArray.filter(function(task) {
-	//     return task.quality === quality;
-	//   })
-	// }
-
-	function sortByQuality() {
-	  return taskArray.sort(function (task) {
-	    return task.quality;
-	  });
-	}
-
-	// function displayByQuality() {
-	//   return taskArray.filter(function)
-	// }
-	// module.exports = index;
-
-/***/ }
-/******/ ]);
