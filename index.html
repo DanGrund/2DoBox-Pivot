@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="css/reset.css"/>
@@ -17,30 +17,30 @@
         <h1 id="todo-logo">2do</h1><h1 id="box-logo">box</h1>
       </summary>
       <form>
-        <textarea type="text" id="title" placeholder="Title"></textarea>
-        <textarea type="text" id="task" placeholder="Task"></textarea>
+        <textarea type="text" id="title" placeholder="Title" title = "title input field" value="title input field"></textarea>
+        <textarea type="text" id="task" placeholder="Task" title = "task description field" value="task description field"></textarea>
         <div id="char-num"></div>
-        <input type="button" value="save" class="button" id="save" disabled>
-        <button class="button" id="sort">sort</button>
+        <input type="button" value="save task" class="button value="sort by "save button" id="save" disabled>
+        <button class="button" id="sort" value="sort by importance">sort</button>
         <form class="quality-buttons">
-          <button type="button" name="button" class="quality-button" id="critical">critical</button>
-          <button type="button" name="button" class="quality-button" id="high">high</button>
-          <button type="button" name="button" class="quality-button" id="normal">normal</button>
-          <button type="button" name="button" class="quality-button" id="low">low</button>
-          <button type="button" name="button" class="quality-button" id="none">none</button>
-          <button type="button" name="button" class="quality-button">dickshorts</button>
+          <button type="button" name="button" class="quality-button" value="show only critical" id="critical">critical</button>
+          <button type="button" name="button" class="quality-button" value="show only high"id="high">high</button>
+          <button type="button" name="button" class="quality-button" value="show only normal"id="normal">normal</button>
+          <button type="button" name="button" class="quality-button" value="show only low"id="low">low</button>
+          <button type="button" name="button" class="quality-button" value="show only none"id="none">none</button>
+          <button type="button" name="button" class="quality-button" value="show only all">dickshorts</button>
         </form>
       </form>
 
     </header>
 
    <section class="search">
-      <textarea type="text" id="search" placeholder="Search"></textarea>
+      <textarea type="text" id="search" placeholder="Search" title="search field"></textarea>
    </section>
 
     <section id="todos">
     </section>
-    <button class="button" id="showall">show all</button>
+    <button type = "button" value = "show all tasks" class="button" id="showall">show all</button>
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

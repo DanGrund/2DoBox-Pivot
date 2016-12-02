@@ -3,7 +3,7 @@ body {
 }
 
 header {
-  background-color: #E5F3F2;
+  background-color: #fafafa;
   height: 100%;
   padding-top: 10px;
   text-align: center;
@@ -26,7 +26,7 @@ textarea {
 }
 
 .button {
-  background-color: #00A79D;
+  background-color: #000;
   border: none;
   color: #FFF;
   display: inline-block;
@@ -38,7 +38,7 @@ textarea {
 }
 
 .button:hover {
-  background-color: #045E55;
+  background-color: lightgray;
 }
 .button:disabled {
   background-color: lightgray;
@@ -61,7 +61,7 @@ textarea {
 }
 
 #todo-logo {
-  color: #00A79D;
+  color: #000;
   display: inline;
   font-family: 'Roboto Slab', serif;
   font-size: 40px;
@@ -111,7 +111,7 @@ article {
 }
 
 .task-body{
-  color: #939598;
+  color: #000;
   text-align: left;
 
 }
@@ -169,7 +169,7 @@ article {
 }
 
 .quality-button {
-  background-color: #00A79D;
+  background-color: #000;
   border: none;
   color: #FFF;
   font-size: 18px;
