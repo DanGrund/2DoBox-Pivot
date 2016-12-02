@@ -46,6 +46,7 @@
 
 	'use strict';
 
+
 	/*jshint esversion: 6 */
 	var taskArray = [];
 	var completedArray = [];
@@ -268,3 +269,9 @@
 	    return a.quality < b.quality;
 	  });
 	}
+
+
+	module.exports = index;
+
+/***/ }
+/******/ ]);
