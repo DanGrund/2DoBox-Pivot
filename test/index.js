@@ -11,15 +11,11 @@ describe('', () => {
     });
 
     it('should have an empty idea array by default ', () => {
-      assert.isArray(ideaArray);
+      assert.isArray(taskArray);
     });
 
     it('should have an empty sorted array by default', () => {
       assert(true);
-    });
-
-    it('should have a sort order of false by default', () => {
-      assert.property(sortedArray, false );
     });
 
     it('if ideas exist in local storage they are rendered to the page', () => {
