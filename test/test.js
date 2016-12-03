@@ -1,31 +1,36 @@
 /*jshint esversion: 6 */
-
-const assert    = require('assert');
+const assert    = require('chai').assert;
 const webdriver = require('selenium-webdriver');
 const test      = require('selenium-webdriver/testing');
 
-test.describe('testing ideabox',()=>{
-  test.it('should allow me to add a title and a description', ()=>{
-    const driver = new webdriver.Builder()
-    .forBrowser('chrome')
-    .build();
 
+test.describe('testing todobox', ()=>{
+   let driver;
+  beforeEach(()=>{
+    driver = new webdriver.Builder().forBrowser('chrome').build();
     driver.get('http://localhost:8080');
+  });
 
-    const title = driver.findElement({title: 'title input field'})
-    const description = driver.findElement({name: 'description'})
-    title.sendKeys('this is a title').then(()=>{
-      return title.getAttribute('value')
-    }).then((value)=>{
-      assert.equal(value, 'this is a title')
-    })
+  afterEach(()=>{
+    driver.quit();
+  });
 
-    description.sendKeys('this is a description').then(()=>{
-      return description.getAttribute('value')
-    }).then((value)=>{
-      assert.equal(value, 'this is a description')
-    })
+  test.it('should allow me to enter a title and a task', ()=>{
+    const title = driver.findElement({name: 'title input field'});
+    const task = driver.findElement({name: 'task input field'});
 
-    driver.quit()
-  })
-})
+    title.sendKeys('this is a title').then( ()=>{
+      return title.getAttribute('value');
+    }).then( (value)=> {
+      assert.equal(value, 'this is a title');
+    });
+});
+
+    // driver.findElement({class: 'task-title'}).then((task-title)=>{
+    //   return task-title.getText()
+    // }).((text)=> {
+    //   assert.equal(text, 'this is a title')
+    // })
+
+
+});
