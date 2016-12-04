@@ -48,9 +48,6 @@
 
 	/*jshint esversion: 6 */
 	var taskArray = [];
-	var completedArray = [];
-	var sortedArray = [];
-	var qualityArray = [];
 	var $title = $('#title');
 	var $task = $('#task');
 	var sortOrder = false;
@@ -61,6 +58,7 @@
 
 	$('document').ready(function () {
 	  loadPage();
+	  pageLoadRender();
 	});
 
 	$("#title, #task").keyup(function () {
@@ -105,6 +103,10 @@
 	    return task.quality.toLowerCase().includes(id);
 	  });
 	  if (matches) return render(matches);
+	});
+
+	$('#show-completed').on('click', function () {
+	  showCompleted();
 	});
 
 	$('#search').on('keyup', function (e) {
@@ -183,7 +185,6 @@
 	      }
 	    });
 	    localStorage.setItem("taskArray", JSON.stringify(taskArray));
-	    // render();
 	  }
 	});
 
@@ -199,7 +200,6 @@
 	      }
 	    });
 	    localStorage.setItem("taskArray", JSON.stringify(taskArray));
-	    // render();
 	  }
 	});
 
@@ -211,7 +211,31 @@
 	  var holdingValue = JSON.parse(localStorage.getItem("taskArray"));
 	  if (holdingValue) {
 	    taskArray = holdingValue;
-	    render(taskArray, 10);
+	    // render(taskArray, 10);
+	  }
+	}
+
+	function pageLoadRender() {
+	  var completedArray = [];
+	  for (var i = 0; i < taskArray.length; i++) {
+	    var task = taskArray[i];
+	    if (!task.completed) {
+	      completedArray.push(task);
+	    }
+	    render(completedArray);
+	  }
+	}
+
+	function showCompleted() {
+	  var completedArray = [];
+	  for (var i = 0; i < taskArray.length; i++) {
+	    var task = taskArray[i];
+	    if (task.completed) {
+	      completedArray.push(task);
+	    } else {
+	      completedArray.unshift(task);
+	    }
+	    render(completedArray);
 	  }
 	}
 
@@ -257,7 +281,7 @@
 	}
 
 	function createCard(task) {
-	  $('#todos').prepend('<article class="new-task" id=' + task.id + '>\n    <div class = "card-top">\n      <h1 class="task-title" contenteditable>' + task.title + '</h1>\n      <button class="delete-btn" value="delete task"></button>\n    </div>\n    <div class = "card-middle">\n      <p class="task-body" contenteditable>' + task.body + '</p>\n    </div>\n    <div class = "card-bottom">\n      <button class="up-btn" value="increase importance button"></button>\n      <button class="down-btn" value="decrease importance button"></button>\n      <h2 class="quality">quality: ' + task.quality + '</h2>\n      <button class="completed-btn" value="mark as completed button">completed</button>\n    </div>\n  </article>');
+	  $('#todos').prepend('<article class="new-task" id=' + task.id + '>\n    <div class = "card-top">\n      <h1 class="task-title" contenteditable>' + task.title + '</h1>\n      <button type="button" class="delete-btn" value="delete task"><p class=\'card-btn-text">Delete Task Button</p></button>\n    </div>\n    <div class = "card-middle">\n      <p class="task-body" contenteditable>' + task.body + '</p>\n    </div>\n    <div class = "card-bottom">\n      <button type="button" class="up-btn" value="increase importance button"><p class=\'card-btn-text\'>Increase Importance Button</p></button>\n      <button type="button" class="down-btn" value="decrease importance button"><p class=\'card-btn-text\'>Decrease Importance Button</p></button>\n      <h2 class="quality">quality: ' + task.quality + '</h2>\n      <button class="completed-btn" value="mark as completed button">completed</button>\n    </div>\n  </article>');
 	}
 
 	function findTaskByID(id) {
@@ -265,18 +289,14 @@
 	    return task.id === id;
 	  })[0];
 	}
-
-	function upSort() {
-	  return taskArray.sort(function (a, b) {
-	    return a.quality > b.quality;
-	  });
-	}
-
-	function downSort() {
-	  return taskArray.sort(function (a, b) {
-	    return a.quality < b.quality;
-	  });
-	}
+	//
+	// function upSort() {
+	//   return taskArray.sort(function(a, b) { return a.quality > b.quality });
+	// }
+	//
+	// function downSort() {
+	//   return taskArray.sort(function(a, b) { return a.quality < b.quality });
+	// }
 
 /***/ }
 /******/ ]);
