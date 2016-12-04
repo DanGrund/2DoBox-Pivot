@@ -98,6 +98,10 @@ article {
   padding-bottom: 20px;
 }
 
+button > .card-btn-text {
+  opacity: 0;
+}
+
 .task-title {
   color: #6D6E71;
   font-family: 'Roboto Slab', serif;
