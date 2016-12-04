@@ -464,15 +464,11 @@
 	    });
 
 	    it('should have an empty idea array by default ', function () {
-	      assert.isArray(ideaArray);
+	      assert.isArray(taskArray);
 	    });
 
 	    it('should have an empty sorted array by default', function () {
 	      assert(true);
-	    });
-
-	    it('should have a sort order of false by default', function () {
-	      assert.property(sortedArray, false);
 	    });
 
 	    it('if ideas exist in local storage they are rendered to the page', function () {
@@ -531,7 +527,7 @@
 	    });
 	  });
 	});
-	//
+
 	// DOM tests
 	// save button creates new card
 	// card persists on refresh
