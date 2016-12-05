@@ -4,8 +4,9 @@ const webdriver = require('selenium-webdriver');
 const test      = require('selenium-webdriver/testing');
 
 
-test.describe('testing todobox', ()=>{
-   let driver;
+test.describe('testing todobox', function(){
+    this.timeout(10000);
+    let driver;
   beforeEach(()=>{
     driver = new webdriver.Builder().forBrowser('chrome').build();
     driver.get('http://localhost:8080');
@@ -86,5 +87,90 @@ test.it('clicking the down button decreases a tasks importance', ()=>{
   });
 });
 
+test.it('should have an editable title field on created cards that saves when focus shifts out', ()=>{
+  const title = driver.findElement({name: 'title input field'});
+  const task = driver.findElement({name: 'task input field'});
+  const save = driver.findElement({name: 'save button'});
+
+  title.sendKeys('title');
+  task.sendKeys('task');
+  save.click().then(()=>{
+    const cardTitle = driver.findElement({name: 'task-title'});
+    const cardTask = driver.findElement({name: 'task-body'});
+
+    cardTitle.sendKeys('edited ').then(()=>{
+      cardTask.click();
+      return cardTitle.getText();
+    }).then((text)=>{
+        assert.equal(text, 'edited title');
+    });
+  });
+});
+
+test.it('should have an editable task field on created cards that saves when focus shifts out', ()=>{
+  const title = driver.findElement({name: 'title input field'});
+  const task = driver.findElement({name: 'task input field'});
+  const save = driver.findElement({name: 'save button'});
+
+  title.sendKeys('title');
+  task.sendKeys('task');
+  save.click().then(()=>{
+    const cardTitle = driver.findElement({name: 'task-title'});
+    const cardTask = driver.findElement({name: 'task-body'});
+
+    cardTask.sendKeys('edited ').then(()=>{
+      cardTitle.click();
+      return cardTask.getText();
+    }).then((text)=>{
+        assert.equal(text, 'edited task');
+    });
+  });
+});
+
+test.it('edited title should persist on page refresh', ()=>{
+  const title = driver.findElement({name: 'title input field'});
+  const task = driver.findElement({name: 'task input field'});
+  const save = driver.findElement({name: 'save button'});
+
+  title.sendKeys('title');
+  task.sendKeys('task');
+  save.click().then(()=>{
+    let cardTitle = driver.findElement({name: 'task-title'});
+    let cardTask = driver.findElement({name: 'task-body'});
+
+    cardTitle.sendKeys('edited ');
+    cardTask.click();
+    driver.navigate().refresh().then(()=>{
+      let cardTitle = driver.findElement({name: 'task-title'});
+      let cardTask = driver.findElement({name: 'task-body'});
+      return cardTitle.getText();
+    }).then((text)=>{
+      assert.equal(text, 'edited title');
+    });
+  });
+});
+
+test.it('edited task should persist on page refresh', ()=>{
+  const title = driver.findElement({name: 'title input field'});
+  const task = driver.findElement({name: 'task input field'});
+  const save = driver.findElement({name: 'save button'});
+
+  title.sendKeys('title');
+  task.sendKeys('task');
+  save.click().then(()=>{
+    let cardTitle = driver.findElement({name: 'task-title'});
+    let cardTask = driver.findElement({name: 'task-body'});
+
+    cardTask.sendKeys('edited ');
+    cardTitle.click();
+    driver.navigate().refresh().then(()=>{
+      let cardTitle = driver.findElement({name: 'task-title'});
+      let cardTask = driver.findElement({name: 'task-body'});
+      return cardTask.getText();
+    }).then((text)=>{
+      assert.equal(text, 'edited task');
+    });
+  });
+});
 
 });
