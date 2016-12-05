@@ -64,14 +64,14 @@ textarea {
 
 .completed {
   opacity: .5;
-  /*-webkit-animation:spin .2s linear;
+  -webkit-animation:spin .2s linear;
     -moz-animation:spin .2s linear;
-    animation:spin .2s linear;*/
+    animation:spin .2s linear;
 }
 
-/*@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }*/
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 .search {
   margin-top: 5px;
