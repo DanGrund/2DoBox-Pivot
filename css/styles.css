@@ -38,12 +38,12 @@ textarea {
 }
 
 .button:hover {
-  background-color: lightgray;
+  background-color: gray;
   cursor: pointer;
 }
 
 .button:disabled {
-  background-color: lightgray;
+  background-color: gray;
   cursor: default;
 }
 
@@ -58,12 +58,12 @@ textarea {
 }
 
 .completed-btn:hover {
-  background-color: lightgray;
+  background-color: gray;
   cursor: pointer;
 }
 
 .completed {
-  background-color: gray;
+  opacity: .5;
 }
 
 .search {
@@ -160,7 +160,6 @@ label > .input-text {
 .task-body{
   color: #000;
   text-align: left;
-
 }
 
 .delete-btn{
@@ -228,7 +227,7 @@ label > .input-text {
 }
 
 .quality-button:hover {
-  background-color: lightgray;
+  background-color: gray;
   cursor: pointer;
 }
 
