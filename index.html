@@ -16,11 +16,14 @@
       <summary>
         <h1 id="todo-logo">2do</h1><h1 id="box-logo">box</h1>
       </summary>
-      <form>
+      <form class="task-form">
+        <label for="title"><p class="input-text">Title Input Field</p></label>
         <textarea type="text" id="title" placeholder="Title" name = "title input field" value="title input field"></textarea>
+        <label for="task"><p class="input-text">Task Input Field</p></label>
         <textarea type="text" id="task" placeholder="Task" name = "task input field" value="task input field"></textarea>
         <div id="char-num"></div>
-        <input type="button" value="save task" class="button value" name="save button" id="save" disabled>
+        <input type="button" value="save task" class="button value" name="save button" id="save" disabled><br>
+        <button type = "button" value = "show completed" class="button" id="show-completed">show completed</button><br>
         <form class="quality-buttons">
           <button type="button" name="button" class="quality-button" value="show only critical" id="critical">critical</button>
           <button type="button" name="button" class="quality-button" value="show only high"id="high">high</button>
@@ -29,7 +32,6 @@
           <button type="button" name="button" class="quality-button" value="show only none"id="none">none</button>
           <button type="button" name="button" class="quality-button" value="show all">all</button>
         </form>
-        <button type = "button" value = "show completed" class="button" id="show-completed">show completed</button>
       </form>
 
     </header>
