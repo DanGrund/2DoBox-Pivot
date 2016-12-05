@@ -63,6 +63,10 @@ textarea {
   cursor: pointer;
 }
 
+.completed {
+  background-color: gray;
+}
+
 .search {
   margin-top: 5px;
   position: relative;
