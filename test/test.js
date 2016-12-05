@@ -8,7 +8,6 @@ test.describe('testing todobox', ()=>{
    let driver;
   beforeEach(()=>{
     driver = new webdriver.Builder().forBrowser('chrome').build();
-    // driver.timeout(10000);
     driver.get('http://localhost:8080');
   });
 
