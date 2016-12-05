@@ -84,7 +84,7 @@ textarea {
 }
 
 #char-num {
-  text-align: right;
+  text-align: center;
   margin-right: 5vw;
   font-size: 15px;
 }
@@ -263,6 +263,7 @@ textarea {
 #title {
   margin-top: 20px;
 }
+
 #task {
   height: 30px;
 }
