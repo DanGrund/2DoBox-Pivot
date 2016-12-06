@@ -48,7 +48,7 @@
 	if(typeof window !== 'undefined' && window.initMochaPhantomJS) { window.initMochaPhantomJS(); }
 	mocha.setup({"ui":"bdd"});
 	__webpack_require__(9)
-	__webpack_require__(50);
+	__webpack_require__(51);
 	if(false) {
 		module.hot.accept();
 		module.hot.dispose(function() {
@@ -454,79 +454,81 @@
 	/*jshint esversion: 6 */
 	var chai = __webpack_require__(10);
 	var assert = chai.assert;
-	// const index = require('../lib/index');
-	// 
-	// describe('', () => {
-	//   context('with default attributes', () => {
-	//
-	//     it('should work', () => {
-	//       assert(true);
-	//     });
-	//
-	//     it('should have an empty idea array by default ', () => {
-	//       assert.isArray(taskArray);
-	//     });
-	//
-	//     it('should have an empty sorted array by default', () => {
-	//       assert(true);
-	//     });
-	//
-	//     it('if ideas exist in local storage they are rendered to the page', () => {
-	//       assert(true);
-	//     });
-	//
-	//     it('should store ideas in local storage', () => {
-	//       assert(true);
-	//     });
-	//
-	//     it('should delete ideas from local storage', () => {
-	//       assert(true);
-	//     });
-	//   });
-	//
-	//   context('is a function', () => {
-	//
-	//     it('loadPage', () => {
-	//       assert.isFunction(loadPage);
-	//     });
-	//
-	//     it('render', () => {
-	//       assert.isFunction(render);
-	//     });
-	//
-	//     it('checkField', () => {
-	//       assert.isFunction(checkField);
-	//     });
-	//
-	//     it('Task', () => {
-	//       assert.isFunction(Task);
-	//     });
-	//
-	//     it('storeTask', () => {
-	//       assert.isFunction(storeTask);
-	//     });
-	//
-	//     it('deleteTask', () => {
-	//       assert.isFunction(deleteTask);
-	//     });
-	//
-	//     it('createCard', () => {
-	//       assert.isFunction(createCard);
-	//     });
-	//
-	//     it('findTaskByID', () => {
-	//       assert.isFunction(findTaskByID);
-	//     });
-	//
-	//     it('upSort', () => {
-	//       assert.isFunction(upSort);
-	//     });
-	//
-	//     it('downSort', () => {
-	//       assert.isFunction(downSort);
-	//     });
-	//   });
-	// });
+	var checkField = __webpack_require__(50);
+
+	describe('checkField', function () {
+	  context('with default attributes', function () {
+
+	    it('should work', function () {
+	      assert(true);
+	    });
+
+	    it('checkField', function () {
+	      assert.isFunction(checkField);
+	    });
+	    //
+	    //     it('should have an empty idea array by default ', () => {
+	    //       assert.isArray(taskArray);
+	    //     });
+	    //
+	    //     it('should have an empty sorted array by default', () => {
+	    //       assert(true);
+	    //     });
+	    //
+	    //     it('if ideas exist in local storage they are rendered to the page', () => {
+	    //       assert(true);
+	    //     });
+	    //
+	    //     it('should store ideas in local storage', () => {
+	    //       assert(true);
+	    //     });
+	    //
+	    //     it('should delete ideas from local storage', () => {
+	    //       assert(true);
+	    //     });
+	    //   });
+	    //
+	    //   context('is a function', () => {
+	    //
+	    //     it('loadPage', () => {
+	    //       assert.isFunction(loadPage);
+	    //     });
+	    //
+	    //     it('render', () => {
+	    //       assert.isFunction(render);
+	    //     });
+	    //
+
+	    //
+	    //     it('Task', () => {
+	    //       assert.isFunction(Task);
+	    //     });
+	    //
+	    //     it('storeTask', () => {
+	    //       assert.isFunction(storeTask);
+	    //     });
+	    //
+	    //     it('deleteTask', () => {
+	    //       assert.isFunction(deleteTask);
+	    //     });
+	    //
+	    //     it('createCard', () => {
+	    //       assert.isFunction(createCard);
+	    //     });
+	    //
+	    //     it('findTaskByID', () => {
+	    //       assert.isFunction(findTaskByID);
+	    //     });
+	    //
+	    //     it('upSort', () => {
+	    //       assert.isFunction(upSort);
+	    //     });
+	    //
+	    //     it('downSort', () => {
+	    //       assert.isFunction(downSort);
+	    //     });
+	  });
+	});
 
 	// DOM tests
 	// save button creates new card
@@ -8509,6 +8511,25 @@
 
 /***/ },
 /* 50 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	function checkField() {
+	  var checkTitle = /\S/.test($("#title").val());
+	  var checkBody = /\S/.test($("#task").val());
+	  var taskLength = $('#task').val().length;
+	  if (checkTitle && checkBody && taskLength < 120) {
+	    $("#save").attr("disabled", false);
+	  } else {
+	    $("#save").attr("disabled", true);
+	  }
+	}
+
+	module.exports = checkField;
+
+/***/ },
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {process.nextTick(function() {
@@ -8519,10 +8540,10 @@
 			mocha.run();
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(51)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(52)))
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports) {
 
 	'use strict';
