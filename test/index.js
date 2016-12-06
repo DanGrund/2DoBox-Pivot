@@ -1,14 +1,69 @@
 /*jshint esversion: 6 */
 const chai = require('chai');
 const assert = chai.assert;
-// const index = require('../lib/index');
-// 
-// describe('', () => {
-//   context('with default attributes', () => {
-//
-//     it('should work', () => {
-//       assert(true);
-//     });
+const Task = require('../lib/task');
+
+describe('Task', () => {
+  context('with default attributes', () => {
+    let newTask = new Task (5, 'New Title', 'New Body');
+
+    it('should work', () => {
+      assert(true);
+    });
+
+    it('should be a function', () => {
+      assert.isFunction(Task);
+    });
+
+    it('should have an ID property', () => {
+      assert.equal(newTask.id, 5);
+    });
+
+    it('should have a title property', () => {
+      assert.equal(newTask.title, 'New Title');
+    });
+
+    it('should have a body property', () => {
+      assert.equal(newTask.body, 'New Body');
+    });
+
+    it('should have a quality property', () => {
+      assert.equal(newTask.quality, 'normal');
+    });
+
+    it('should have a completed property', () => {
+      assert.equal(newTask.completed, false);
+    });
+  });
+});
+
+  context('when changing quality', () => {
+
+    it('should have an quality of critical when passed as an argument', () => {
+      let newTask = new Task (5, 'New Title', 'New Body', 'critical');
+      assert.equal(newTask.quality, 'critical');
+    });
+
+    it('should have an quality of high when passed as an argument', () => {
+      let newTask = new Task (5, 'New Title', 'New Body', 'high');
+      assert.equal(newTask.quality, 'high');
+    });
+
+    it('should have an quality of normal when passed as an argument', () => {
+      let newTask = new Task (5, 'New Title', 'New Body', 'normal');
+      assert.equal(newTask.quality, 'normal');
+    });
+
+    it('should have an quality of low when passed as an argument', () => {
+      let newTask = new Task (5, 'New Title', 'New Body', 'low');
+      assert.equal(newTask.quality, 'low');
+    });
+
+    it('should have an quality of none when passed as an argument', () => {
+      let newTask = new Task (5, 'New Title', 'New Body', 'none');
+      assert.equal(newTask.quality, 'none');
+    });
+  });
 //
 //     it('should have an empty idea array by default ', () => {
 //       assert.isArray(taskArray);
@@ -41,9 +96,7 @@ const assert = chai.assert;
 //       assert.isFunction(render);
 //     });
 //
-//     it('checkField', () => {
-//       assert.isFunction(checkField);
-//     });
+
 //
 //     it('Task', () => {
 //       assert.isFunction(Task);
@@ -72,8 +125,6 @@ const assert = chai.assert;
 //     it('downSort', () => {
 //       assert.isFunction(downSort);
 //     });
-//   });
-// });
 
 // DOM tests
 // save button creates new card

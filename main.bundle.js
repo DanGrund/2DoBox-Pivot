@@ -47,14 +47,13 @@
 	'use strict';
 
 	/*jshint esversion: 6 */
-	var taskArray = [];
 	var $title = $('#title');
 	var $task = $('#task');
-	var sortOrder = false;
 	var qualityChangers = {
 	  up: { Critical: "Critical", High: "Critical", Normal: "High", Low: "Normal", None: "Low" },
 	  down: { Critical: "High", High: "Normal", Normal: "Low", Low: "None", None: "None" }
 	};
+	var taskArray = [];
 
 	$('document').ready(function () {
 	  loadPage();
@@ -85,16 +84,6 @@
 	  $title.val("");
 	  $task.val("");
 	  $title.focus();
-	});
-
-	$('#sort').on('click', function (e) {
-	  if (!sortOrder) {
-	    render(downSort());
-	    sortOrder = !sortOrder;
-	  } else {
-	    render(upSort());
-	    sortOrder = !sortOrder;
-	  }
 	});
 
 	$('.quality-button').on('click', function () {
@@ -155,7 +144,7 @@
 	  var currentTask = findTaskByID(id);
 	  var taskComplete = currentTask.completed;
 	  if (taskComplete === false) {
-	    $(this).closest("article").css("background-color", "gray");
+	    $(this).closest("article").toggleClass("completed");
 	    taskArray.forEach(function (task) {
 	      if (task.id === id) {
 	        task.completed = true;
@@ -163,7 +152,7 @@
 	    });
 	    localStorage.setItem("taskArray", JSON.stringify(taskArray));
 	  } else {
-	    $(this).closest("article").css("background-color", "white");
+	    $(this).closest("article").toggleClass("completed");
 	    taskArray.forEach(function (task) {
 	      if (task.id === id) {
 	        task.completed = false;
@@ -174,32 +163,40 @@
 	});
 
 	$('#todos').on('keyup blur', ".task-title", function (e) {
+	  var _this = this;
+
 	  if (e.which == 13 || e.type === "focusout") {
-	    e.preventDefault();
-	    var id = +$(this).closest("article").attr('id');
-	    var currentTask = findTaskByID(id);
-	    var newTitle = $(this).text();
-	    taskArray.forEach(function (task) {
-	      if (task.id === id) {
-	        task.title = newTitle;
-	      }
-	    });
-	    localStorage.setItem("taskArray", JSON.stringify(taskArray));
+	    (function () {
+	      e.preventDefault();
+	      var id = +$(_this).closest("article").attr('id');
+	      var currentTask = findTaskByID(id);
+	      var newTitle = $(_this).text();
+	      taskArray.forEach(function (task) {
+	        if (task.id === id) {
+	          task.title = newTitle;
+	        }
+	      });
+	      localStorage.setItem("taskArray", JSON.stringify(taskArray));
+	    })();
 	  }
 	});
 
 	$('#todos').on('keyup blur', ".task-body", function (e) {
+	  var _this2 = this;
+
 	  if (e.which == 13 || e.type === "focusout") {
-	    e.preventDefault();
-	    var id = +$(this).closest("article").attr('id');
-	    var currentTask = findTaskByID(id);
-	    var newBody = $(this).text();
-	    taskArray.forEach(function (task) {
-	      if (task.id === id) {
-	        task.body = newBody;
-	      }
-	    });
-	    localStorage.setItem("taskArray", JSON.stringify(taskArray));
+	    (function () {
+	      e.preventDefault();
+	      var id = +$(_this2).closest("article").attr('id');
+	      var currentTask = findTaskByID(id);
+	      var newBody = $(_this2).text();
+	      taskArray.forEach(function (task) {
+	        if (task.id === id) {
+	          task.body = newBody;
+	        }
+	      });
+	      localStorage.setItem("taskArray", JSON.stringify(taskArray));
+	    })();
 	  }
 	});
 
@@ -211,7 +208,6 @@
 	  var holdingValue = JSON.parse(localStorage.getItem("taskArray"));
 	  if (holdingValue) {
 	    taskArray = holdingValue;
-	    // render(taskArray, 10);
 	  }
 	}
 
@@ -230,13 +226,17 @@
 	  var completedArray = [];
 	  for (var i = 0; i < taskArray.length; i++) {
 	    var task = taskArray[i];
-	    if (task.completed) {
+	    if (!task.completed) {
 	      completedArray.push(task);
-	    } else {
-	      completedArray.unshift(task);
 	    }
-	    render(completedArray);
 	  }
+	  for (var _i = 0; _i < taskArray.length; _i++) {
+	    var _task = taskArray[_i];
+	    if (_task.completed) {
+	      completedArray.push(_task);
+	    }
+	  }
+	  render(completedArray);
 	}
 
 	function render(givenArray, cardsToRender) {
@@ -281,7 +281,11 @@
 	}
 
 	function createCard(task) {
-	  $('#todos').prepend('<article class="new-task" id=' + task.id + '>\n    <div class = "card-top">\n      <h1 class="task-title" contenteditable>' + task.title + '</h1>\n      <button type="button" class="delete-btn" value="delete task"><p class=\'card-btn-text">Delete Task Button</p></button>\n    </div>\n    <div class = "card-middle">\n      <p class="task-body" contenteditable>' + task.body + '</p>\n    </div>\n    <div class = "card-bottom">\n      <button type="button" class="up-btn" value="increase importance button"><p class=\'card-btn-text\'>Increase Importance Button</p></button>\n      <button type="button" class="down-btn" value="decrease importance button"><p class=\'card-btn-text\'>Decrease Importance Button</p></button>\n      <h2 class="quality">quality: ' + task.quality + '</h2>\n      <button class="completed-btn" value="mark as completed button">completed</button>\n    </div>\n  </article>');
+	  if (task.completed === true) {
+	    $('#todos').prepend('<article class="new-task completed" id=' + task.id + '>\n     <div class = "card-top">\n       <h1 class="task-title" name="task-title" contenteditable>' + task.title + '</h1>\n       <button type="button" class="delete-btn" value="delete task"><p class=\'card-btn-text\'>Delete Task Button</p></button>\n     </div>\n     <div class = "card-middle">\n       <p class="task-body" name="task-body" contenteditable>' + task.body + '</p>\n     </div>\n     <div class = "card-bottom">\n       <button type="button" class="up-btn" value="increase importance button" name="up-button"><p class=\'card-btn-text\'>Increase Importance Button</p></button>\n       <button type="button" class="down-btn" name="down-button" value="decrease importance button"><p class=\'card-btn-text\'>Decrease Importance Button</p></button>\n       <h2 class="quality" name="quality">quality: ' + task.quality + '</h2>\n\n       <button class="completed-btn" value="mark as completed button">completed</button>\n     </div>\n   </article>');
+	  } else {
+	    $('#todos').prepend('<article class="new-task" id=' + task.id + '>\n    <div class = "card-top">\n      <h1 class="task-title" name="task-title" contenteditable>' + task.title + '</h1>\n      <button type="button" class="delete-btn" value="delete task"><p class=\'card-btn-text\'>Delete Task Button</p></button>\n    </div>\n    <div class = "card-middle">\n      <p class="task-body" name="task-body" contenteditable>' + task.body + '</p>\n    </div>\n    <div class = "card-bottom">\n      <button type="button" class="up-btn" value="increase importance button" name="up-button"><p class=\'card-btn-text\'>Increase Importance Button</p></button>\n      <button type="button" class="down-btn" name="down-button" value="decrease importance button"><p class=\'card-btn-text\'>Decrease Importance Button</p></button>\n      <h2 class="quality" name="quality">quality: ' + task.quality + '</h2>\n      <button class="completed-btn" value="mark as completed button">completed</button>\n    </div>\n  </article>');
+	  }
 	}
 
 	function findTaskByID(id) {
@@ -289,14 +293,6 @@
 	    return task.id === id;
 	  })[0];
 	}
-	//
-	// function upSort() {
-	//   return taskArray.sort(function(a, b) { return a.quality > b.quality });
-	// }
-	//
-	// function downSort() {
-	//   return taskArray.sort(function(a, b) { return a.quality < b.quality });
-	// }
 
 /***/ }
 /******/ ]);
